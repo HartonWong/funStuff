@@ -7,10 +7,11 @@ void screenStay();
 int main()
 {
 	using namespace fixedpoint;
-	const int p = 8;
-	fixed_point<p> b=fixed_point<p>(15.16); 
+	const int p = 16;
+	fixed_point<p> b=fixed_point<p>(15.16);
+	fixed_point<p> a= sqrt(b);
 
-	float c = fix2float<p>(b.intValue);
+	float c = fix2float<p>(a.intValue);
 
 	std::cout << c << std::endl;
 	screenStay();
