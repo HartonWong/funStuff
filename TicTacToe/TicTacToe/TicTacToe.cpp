@@ -30,11 +30,16 @@ int main()
 		do{
 			cout << " You can start first, where do you want to place?" << "\n";
 			cin >> playerPos;
-		} while (!(playerPos > 1 & playerPos < 9));
+		} while (!(playerPos >= 1 & playerPos <= 9));
 
 		gameBoard(playerPos,true);
+
 		cout << " It's my movement now " << "\n";
-		gameBoard((rand() % 6) + 1, false);
+		int nRand;
+		do{
+			nRand = (rand() % 6) + 1;
+		} while (crossPos[nRand] == 'X' | crossPos[nRand] == 'O');
+		gameBoard(nRand, false);
 	}
 
 	screenStay();
