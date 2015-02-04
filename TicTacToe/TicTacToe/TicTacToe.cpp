@@ -1,8 +1,9 @@
-#include "stdafx.h"		/*precompiled header*/
+//#include "stdafx.h"		/*precompiled header*/
 #include <iostream>		/*cout,cin*/
 #include <stdio.h>      /* printf, scanf, puts, NULL */
 #include <stdlib.h>		/* srand, rand */
 #include <ctime>		/* for time()*/
+#include "GameBoard.h
 
 /*
 THINGS TO WORK ON:
@@ -19,14 +20,8 @@ THINGS TO WORK ON:
 
 using namespace std;
 void screenStay();
-void gameBoard(int Input, bool playerMove);
-void printGameBoard(char gridPos[9]);
 bool gameWin(char playerSign);
 
-//global variables
-char playerSign;
-char computerSign;
-static char gridPos[10];
 
 int main()
 {
@@ -35,18 +30,18 @@ int main()
 	int playerPos;
 	int computerPos;
 	char startFirst;
+	char playerSign;
+	char computerSign;
 
 
 	cout << "So this is the game of Tic Tac Toe, let see how it works" << "\n";
-
-	//initialize the board with the number 
-	gameBoard(0, true);
-
 	cout << "What kind of sign you would like to use?" << "\n";
 	cin >> playerSign;
 	cout << "What kind of sign you would like ME to use?" << "\n";
 	cin >> computerSign;
+    GameBoard newGameBoard(10,playerSign,computerSign);
 
+{
 	//let the player to choose if player go first or computer
 	do {
 		cout << " Do you want to start first or not? y=yes and n=no \n";
@@ -57,7 +52,7 @@ int main()
 	if (startFirst == 'n')
 	{
 		computerPos = (rand() % 8) + 1;
-		gameBoard(computerPos, false);
+		newGameBoard.setComputerPos(computerPos);
 	}
 
 	int count = 0;
@@ -72,7 +67,7 @@ int main()
 				cout << "You cannot replace where I have placed \n";
 		} while ((!(playerPos >= 1 & playerPos <= 9)) | gridPos[playerPos] == playerSign | gridPos[playerPos] == computerSign);
 
-		gameBoard(playerPos,true);
+		newGameBoard.setPlayerPos(playerPos);
 		count++;
 		if (gameWin(playerSign) == true)
 			break;
@@ -123,45 +118,6 @@ bool gameWin(char playerSign)
 		return playerWin = true;
 }
 
-//modify gridPos with X and O based on player's decision
-void gameBoard(int Input,bool playerMove)
-{
-	if (Input == 0)
-	{
-		char count = 49; //ASCII number 1 start at char 49
-		for (int iii = 1; iii <10; iii++)
-		{
-			gridPos[iii] = count;
-			count++;
-		}
-	}
-	else
-	{
-		if (playerMove)
-		{
-			gridPos[Input] = playerSign;
-		}
-		else
-		{
-			gridPos[Input] = computerSign;
-		}
-	}
-
-	printGameBoard(gridPos);
-
-}
-
-//print the game board based on the stored char in gridPos
-void printGameBoard(char gridPos[])
-{
-	using namespace std;
-	cout << " " << gridPos[1]<<" | "<<gridPos[2]<<" | "<<gridPos[3]<<" " << "\n";
-	cout << "---+---+---" << "\n";
-	cout << " " << gridPos[4] << " | " << gridPos[5] << " | " << gridPos[6] << " " << "\n";
-	cout << "---+---+---" << "\n";
-	cout << " " << gridPos[7] << " | " << gridPos[8] << " | " << gridPos[9] << " " << "\n";;
-
-}
 void screenStay()
 {
 	using namespace std;
