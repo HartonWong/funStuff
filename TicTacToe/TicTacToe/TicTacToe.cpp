@@ -4,6 +4,7 @@
 #include <stdlib.h>		/* srand, rand */
 #include <ctime>		/* for time()*/
 #include "GameBoard.h"
+#include "Score.h"
 
 /*
 THINGS TO WORK ON:

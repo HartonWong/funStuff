@@ -5,14 +5,17 @@ class GameBoard
     private:
     enum GameState
     {
-        Player_WIN;
-        Computer_WIN;
+        PLAYER_WIN;
+        COMPUTER_WIN;
+        WIN;
         TIE;
+        PLAYING;
     }
+    GameState winChecking(char sign);
 
     public:
 
-    GameState getGameState();
+    GameState getGameState(GameBoard &cGameBoard);
 
 };
 
