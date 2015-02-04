@@ -3,7 +3,7 @@
 #include <stdio.h>      /* printf, scanf, puts, NULL */
 #include <stdlib.h>		/* srand, rand */
 #include <ctime>		/* for time()*/
-#include "GameBoard.h
+#include "GameBoard.h"
 
 /*
 THINGS TO WORK ON:
@@ -41,7 +41,6 @@ int main()
 	cin >> computerSign;
     GameBoard newGameBoard(10,playerSign,computerSign);
 
-{
 	//let the player to choose if player go first or computer
 	do {
 		cout << " Do you want to start first or not? y=yes and n=no \n";
@@ -61,13 +60,8 @@ int main()
 		do{
 			cout << " Where do you want to place?" << "\n";
 			cin >> playerPos;
-			if (gridPos[playerPos] == playerSign)
-				cout << "You cannot replace where you have placed \n";
-			if (gridPos[playerPos] == computerSign)
-				cout << "You cannot replace where I have placed \n";
-		} while ((!(playerPos >= 1 & playerPos <= 9)) | gridPos[playerPos] == playerSign | gridPos[playerPos] == computerSign);
+		} while (newGameBoard.setPlayerPos(playerPos)==false);
 
-		newGameBoard.setPlayerPos(playerPos);
 		count++;
 		if (gameWin(playerSign) == true)
 			break;
@@ -76,9 +70,7 @@ int main()
 		int computerPos;
 		do{
 			computerPos = (rand() % 8) + 1; //to do random number from 1 to 9
-		} while (gridPos[computerPos] == playerSign | gridPos[computerPos] == computerSign);
-
-		gameBoard(computerPos, false);
+		} while (newGameBoard.setComputerPos(computerPos)==false);
 		count++;
 		if (gameWin(computerSign) == true)
 			break;

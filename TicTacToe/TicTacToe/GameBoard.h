@@ -13,15 +13,19 @@ class GameBoard
     GameBoard();
 
     public:
-    GameBoard(int nSize,char chPlayerSign='X',char chComputerSign='O');
+    GameBoard(int nSize,char chPlayerSign,char chComputerSign);
     ~GameBoard();
 
+    //return true if player position is set correctly, and false if something went wrong
     bool setPlayerPos(int playerPos);
+    //return true if player position is set correctly, and false if something went wrong
     bool setComputerPos(int computerPos);
     char getGridChar(int pos);
     char getPlayerSign();
     char getComputerSign();
     void printBoard();
+
+    friend class Score;
 
 
 };
