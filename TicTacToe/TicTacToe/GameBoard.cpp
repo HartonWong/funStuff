@@ -15,8 +15,10 @@ GameBoard::GameBoard(int nSize,char chPlayerSign='X',char chComputerSign='O')
         pnArray[iii] = count;
         count++;
     }
+    printBoard();
 }
 
+//destory the dynamic array to avoid memory leak
 GameBoard::~GameBoard()
 {
     if(pnArray)
@@ -44,6 +46,7 @@ bool GameBoard::setPlayerPos(int playerPos)
         return false;
     }
     pnArray[playerPos]=m_chPlayerSign;
+    printBoard();
     return true;
 }
 bool GameBoard::setComputerPos(int computerPos)
@@ -53,6 +56,7 @@ bool GameBoard::setComputerPos(int computerPos)
     else
     {
         pnArray[computerPos]=m_chComputerSign;
+        printBoard();
         return true;
     }
 }

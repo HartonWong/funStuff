@@ -18,15 +18,15 @@ class GameBoard
 
     //return true if player position is set correctly, and false if something went wrong
     bool setPlayerPos(int playerPos);
-    //return true if player position is set correctly, and false if something went wrong
+    //return true if computer position is set correctly, and false if something went wrong
     bool setComputerPos(int computerPos);
+    //return the char in particular position
     char getGridChar(int pos);
     char getPlayerSign();
     char getComputerSign();
     void printBoard();
 
     friend class Score;
-
 
 };
 

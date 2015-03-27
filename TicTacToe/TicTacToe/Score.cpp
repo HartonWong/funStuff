@@ -1,28 +1,32 @@
+#include "GameBoard.h"
 #include "Score.h"
 
-GameState Score::getGameState(GameBoard &cGameBoard)
-{
 
-}
-
-GameState Score::winChecking(char sign)
+bool Score::winChecking(char sign,GameBoard &cGameBoard)
 {
-	bool playerWin = false;
-	if (gridPos[1] == playerSign & gridPos[2] == playerSign & gridPos[3] == playerSign)
-		return playerWin = true;
-	if (gridPos[1] == playerSign &gridPos[4] == playerSign &gridPos[7] == playerSign)
-		return playerWin = true;
-	if (gridPos[4] == playerSign &gridPos[5] == playerSign &gridPos[6] == playerSign)
-		return playerWin = true;
-	if (gridPos[1] == playerSign &gridPos[5] == playerSign &gridPos[9] == playerSign)
-		return playerWin = true;
-	if (gridPos[2] == playerSign &gridPos[5] == playerSign &gridPos[8] == playerSign)
-		return playerWin = true;
-	if (gridPos[3] == playerSign &gridPos[5] == playerSign &gridPos[7] == playerSign)
-		return playerWin = true;
-	if (gridPos[7] == playerSign &gridPos[8] == playerSign &gridPos[9] == playerSign)
-		return playerWin = true;
-	if (gridPos[3] == playerSign &gridPos[6] == playerSign &gridPos[9] == playerSign)
-		return playerWin = true;
+	if ((cGameBoard.pnArray[1] == sign) & (cGameBoard.pnArray[2] == sign) & (cGameBoard.pnArray[3] == sign))
+		return true;
+	if ((cGameBoard.pnArray[1] == sign) &(cGameBoard.pnArray[4] == sign) &(cGameBoard.pnArray[7] == sign))
+		return true;
+	if ((cGameBoard.pnArray[4] == sign) &(cGameBoard.pnArray[5] == sign) &(cGameBoard.pnArray[6] == sign))
+		return true;
+	if ((cGameBoard.pnArray[1] == sign) &(cGameBoard.pnArray[5] == sign) &(cGameBoard.pnArray[9] == sign))
+		return true;
+	if ((cGameBoard.pnArray[2] == sign) &(cGameBoard.pnArray[5] == sign) &(cGameBoard.pnArray[8] == sign))
+		return true;
+	if ((cGameBoard.pnArray[3] == sign) &(cGameBoard.pnArray[5] == sign) &(cGameBoard.pnArray[7] == sign))
+		return true;
+	if ((cGameBoard.pnArray[7] == sign) &(cGameBoard.pnArray[8] == sign) &(cGameBoard.pnArray[9] == sign))
+		return true;
+	if ((cGameBoard.pnArray[3] == sign) &(cGameBoard.pnArray[6] == sign) &(cGameBoard.pnArray[9] == sign))
+		return true;
+    return false;
 }
-Player_WIN;
+Score::GameState Score::getGameState(GameBoard &cGameBoard)
+{
+    if  (winChecking(cGameBoard.m_chPlayerSign,cGameBoard)==true)
+        return PLAYER_WIN;
+    if  (winChecking(cGameBoard.m_chComputerSign,cGameBoard)==true)
+        return COMPUTER_WIN;
+    return PLAYING;
+}
