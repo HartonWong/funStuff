@@ -2,7 +2,7 @@
 #include "Score.h"
 
 
-bool Score::winChecking(char sign,GameBoard &cGameBoard)
+bool Score::winChecking(char sign,const GameBoard &cGameBoard)
 {
 	if ((cGameBoard.pnArray[1] == sign) & (cGameBoard.pnArray[2] == sign) & (cGameBoard.pnArray[3] == sign))
 		return true;
@@ -22,7 +22,7 @@ bool Score::winChecking(char sign,GameBoard &cGameBoard)
 		return true;
     return false;
 }
-Score::GameState Score::getGameState(GameBoard &cGameBoard)
+Score::GameState Score::getGameState(const GameBoard &cGameBoard)
 {
     if  (winChecking(cGameBoard.m_chPlayerSign,cGameBoard)==true)
         return PLAYER_WIN;
