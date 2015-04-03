@@ -35,7 +35,7 @@ bool GameBoard::setPlayerPos(int playerPos)
         cout << "Your position should be within 1 and 9 \n";
         return false;
     }
-    if (pnArray[playerPos]==m_chPlayerSign)
+    if (pnArray[playerPos]== m_chPlayerSign)
     {
         cout << "You cannot replace where you have placed \n";
         return false;
@@ -60,6 +60,7 @@ bool GameBoard::setComputerPos(int computerPos)
         return true;
     }
 }
+
 
 char GameBoard::getGridChar(int pos)
 {

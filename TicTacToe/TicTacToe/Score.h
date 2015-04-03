@@ -13,8 +13,8 @@ class Score
 
     public:
     //return the state of the game once the caller passed the gameBoard to score
-    GameState getGameState(GameBoard &cGameBoard);
-    bool winChecking(char sign,GameBoard &cGameBoard);
+    GameState getGameState(const GameBoard &cGameBoard);
+    bool winChecking(char sign,const GameBoard &cGameBoard);
 
 };
 
