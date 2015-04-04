@@ -4,7 +4,7 @@ using namespace std;
 
 GameBoard::GameBoard(int nSize,char chPlayerSign='X',char chComputerSign='O')
 {
-    m_nSize=nSize;
+    m_nSize=nSize+1;
     m_chPlayerSign=chPlayerSign;
     m_chComputerSign=chComputerSign;
     pnArray= new char[m_nSize];
@@ -15,7 +15,6 @@ GameBoard::GameBoard(int nSize,char chPlayerSign='X',char chComputerSign='O')
         pnArray[iii] = count;
         count++;
     }
-    printBoard();
 }
 
 //destory the dynamic array to avoid memory leak
