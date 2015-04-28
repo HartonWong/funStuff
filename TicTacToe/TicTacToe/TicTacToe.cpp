@@ -6,18 +6,6 @@
 #include "GameBoard.h"
 #include "Score.h"
 
-/*
-THINGS TO WORK ON:
-1) player can choose start first or not, choose using X or O	DONE
-2) resizable board, can choose 3x3, 4x4, 5x5...etc
-3) AI, stupid computer now that won't block user's movement.
-4) Refactoring
-	a) Rename variables into more descriptive words
-	b) Put some of the functions into header file?
-	c) Put the forward function call into header file
-	d) find ways to reduce the size of code
-	e) reduce the use of global variables such as gridPos and namespace
-*/
 
 using namespace std;
 void screenStay();
