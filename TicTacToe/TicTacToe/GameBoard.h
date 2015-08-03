@@ -4,12 +4,12 @@
 class GameBoard
 {
     private:
-    char m_chPlayerSign;
-    char m_chComputerSign;
+    std::string m_chPlayerSign;
+    std::string m_chComputerSign;
     int m_nRow;
     int m_nCol;
     int m_nSize;
-    char *pnArray;
+    std::string *pnArray;
 
     // default constructor is not allowed;
     GameBoard();
@@ -19,17 +19,17 @@ class GameBoard
 
 
     public:
-    GameBoard(int nRow,int nCol,char chPlayerSign,char chComputerSign);
+    GameBoard(int nRow,int nCol,std::string chPlayerSign,std::string chComputerSign);
     ~GameBoard();
 
     //return true if player position is set correctly, and false if something went wrong
     bool setPlayerPos(int playerPos);
     //return true if computer position is set correctly, and false if something went wrong
     bool setComputerPos(int computerPos);
-    //return the char in particular position
-    char getGridChar(int pos);
-    char getPlayerSign();
-    char getComputerSign();
+    //return the std::string in particular position
+    std::string getGridChar(int pos);
+    std::string getPlayerSign();
+    std::string getComputerSign();
     void printBoard();
 
     friend class Score;

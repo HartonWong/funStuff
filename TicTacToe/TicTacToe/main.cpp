@@ -34,12 +34,16 @@ int main()
 	int playerPos;
 	int computerPos;
 	char startFirst;
-	char playerSign;
-	char computerSign;
+	string playerSign;
+	string computerSign;
 	int numOfRow=3;
 	int numOfCol=3;
 	int boardSize=numOfRow*numOfCol;
 
+    cout<<"How many ROWS you want the board to be ?\n";
+    cin>>numOfRow;
+    cout<<"How many COLOUMNS you want the board to be ?\n";
+    cin>>numOfCol;
 
 	cout << "So this is the game of Tic Tac Toe, let see how it works" << "\n";
 	cout << "What kind of sign you would like to use?" << "\n";
@@ -47,10 +51,6 @@ int main()
 	cout << "What kind of sign you would like ME to use?" << "\n";
 	cin >> computerSign;
 
-    cout<<"numOfRow and numOfCol? \n";
-    cin>>numOfCol;
-    numOfRow=numOfCol;
-	//GameBoard(int nRow,int nCol,char chPlayerSign,char chComputerSign);
     GameBoard gameBoard(numOfRow,numOfCol,playerSign,computerSign);
 
 	//-----------------let the player to choose if player go first or computer-----------------

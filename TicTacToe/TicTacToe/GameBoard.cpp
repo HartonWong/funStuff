@@ -1,33 +1,21 @@
 #include <iostream>
 #include "GameBoard.h"
+#include <sstream>      //for ostringstream used in int conversion
 
 
 //constructor
-GameBoard::GameBoard(int nRow,int nCol,char chPlayerSign='X',char chComputerSign='O')
+GameBoard::GameBoard(int nRow,int nCol,std::string chPlayerSign,std::string chComputerSign)
 {
     m_nRow=nRow;
     m_nCol=nCol;
     m_nSize=nRow*nCol;
     m_chPlayerSign=chPlayerSign;
     m_chComputerSign=chComputerSign;
-    pnArray= new char[m_nSize+1];
+    pnArray= new std::string[m_nSize+1];
 
-    char count = 49; //ASCII number 1 start at char 49
     for (int iii = 1; iii <=m_nSize; iii++)
     {
-        pnArray[iii] = count;
-        count++;
-        /*
-        if(count<=57)
-        {
-            pnArray[iii] = count;
-            count++;
-        }
-        else
-        {
-
-        }
-        */
+        pnArray[iii]=intToString(iii);
     }
     printBoard();
 }
@@ -61,6 +49,8 @@ bool GameBoard::setPlayerPos(int playerPos)
         return false;
     }
     pnArray[playerPos]=m_chPlayerSign;
+    if(playerPos>9)
+        pnArray[playerPos]+=" ";
     printBoard();
     return true;
 }
@@ -79,15 +69,15 @@ bool GameBoard::setComputerPos(int computerPos)
 }
 
 
-char GameBoard::getGridChar(int pos)
+std::string GameBoard::getGridChar(int pos)
 {
     return pnArray[pos];
 }
-char GameBoard::getPlayerSign()
+std::string GameBoard::getPlayerSign()
 {
     return m_chPlayerSign;
 }
-char GameBoard::getComputerSign()
+std::string GameBoard::getComputerSign()
 {
     return m_chComputerSign;
 }
@@ -120,7 +110,10 @@ void GameBoard::printNum(int &index)
     cout<<" ";
     for(int col=1;col<m_nCol;++col)
     {
+        if(index<=9)             //1 digit number
         cout<< pnArray[index]<<" | ";
+        else                    //2 digit number, delete one space
+        cout<< pnArray[index]<<"| ";
         ++index;
     }
     cout<< pnArray[index]<<"\n";
@@ -129,6 +122,7 @@ void GameBoard::printNum(int &index)
 std::string GameBoard::intToString(int integer)
 {
     using namespace std;
-    string name("John");
-    return name;
+    ostringstream convert;  // stream used for the conversion
+    convert<<integer;
+    return  convert.str();  //return the contents of the stream
 }

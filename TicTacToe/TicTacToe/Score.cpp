@@ -3,7 +3,7 @@
 #include <iostream>		/*cout,cin*/
 
 
-bool Score::winChecking(char sign,const GameBoard &cGameBoard)
+bool Score::winChecking(std::string sign,const GameBoard &cGameBoard)
 {
 	if ((cGameBoard.pnArray[1] == sign) & (cGameBoard.pnArray[2] == sign) & (cGameBoard.pnArray[3] == sign))
 		return true;

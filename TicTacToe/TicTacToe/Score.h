@@ -1,5 +1,6 @@
 #ifndef SCORE_H_INCLUDED
 #define SCORE_H_INCLUDED
+#include <string>
 class Score
 {
     public:
@@ -11,7 +12,7 @@ class Score
     };
     //return the state of the game once the caller passed the gameBoard to score
     GameState getGameState(const GameBoard &cGameBoard);
-    bool winChecking(char sign,const GameBoard &cGameBoard);
+    bool winChecking(std::string sign,const GameBoard &cGameBoard);
 
 };
 
