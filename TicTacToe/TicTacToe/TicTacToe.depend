@@ -1,0 +1,48 @@
+# depslib dependency file v1.0
+1427498976 source:e:\codeblocks\projects\tictactoe\gameboard.cpp
+	<iostream>
+	"GameBoard.h"
+
+1427495374 e:\codeblocks\projects\tictactoe\gameboard.h
+
+1427499982 source:e:\codeblocks\projects\tictactoe\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<ctime>
+	"GameBoard.h"
+	"Score.h"
+
+1427488626 source:e:\codeblocks\projects\tictactoe\tictactoe.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<ctime>
+	"GameBoard.h"
+
+1427500168 e:\codeblocks\projects\tictactoe\score.h
+
+1427500168 source:e:\codeblocks\projects\tictactoe\score.cpp
+	"GameBoard.h"
+	"Score.h"
+
+1438626830 source:h:\tictactoe\gameboard.cpp
+	<iostream>
+	"GameBoard.h"
+
+1427498974 h:\tictactoe\gameboard.h
+
+1438628662 source:h:\tictactoe\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<ctime>
+	"GameBoard.h"
+	"Score.h"
+
+1427503768 h:\tictactoe\score.h
+
+1427503768 source:h:\tictactoe\score.cpp
+	"GameBoard.h"
+	"Score.h"
+
