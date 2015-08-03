@@ -6,6 +6,8 @@ class GameBoard
     private:
     char m_chPlayerSign;
     char m_chComputerSign;
+    int m_nRow;
+    int m_nCol;
     int m_nSize;
     char *pnArray;
 
@@ -13,7 +15,7 @@ class GameBoard
     GameBoard();
 
     public:
-    GameBoard(int nSize,char chPlayerSign,char chComputerSign);
+    GameBoard(int nRow,int nCol,char chPlayerSign,char chComputerSign);
     ~GameBoard();
 
     //return true if player position is set correctly, and false if something went wrong

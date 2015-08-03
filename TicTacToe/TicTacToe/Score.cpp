@@ -1,5 +1,6 @@
 #include "GameBoard.h"
 #include "Score.h"
+#include <iostream>		/*cout,cin*/
 
 
 bool Score::winChecking(char sign,const GameBoard &cGameBoard)
@@ -25,8 +26,14 @@ bool Score::winChecking(char sign,const GameBoard &cGameBoard)
 Score::GameState Score::getGameState(const GameBoard &cGameBoard)
 {
     if  (winChecking(cGameBoard.m_chPlayerSign,cGameBoard)==true)
+    {
+        std::cout << " You Win!! :)" << "\n";
         return PLAYER_WIN;
+    }
     if  (winChecking(cGameBoard.m_chComputerSign,cGameBoard)==true)
+    {
+        std::cout << " I Win!! :)" << "\n";
         return COMPUTER_WIN;
+    }
     return PLAYING;
 }

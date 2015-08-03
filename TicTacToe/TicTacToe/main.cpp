@@ -16,14 +16,16 @@ THINGS TO WORK ON:
 	b) Put some of the functions into header file?
 	c) Put the forward function call into header file
 	d) find ways to reduce the size of code
-	e) reduce the use of global variables such as newGameBoard.getGridChar and namespace
-	f) check user input against integer and string
+	e) reduce the use of global variables such as gameBoard.getGridChar and namespace
+5) check user input against integer and string
 */
 
 using namespace std;
-void screenStay();      //for visual studio
-bool gameWin(char sign,const GameBoard &board);
+
+//forward function declaration
 int randomNum(int min,int max);
+void playerMovement(GameBoard &board,int &trial);
+void computerMovement(GameBoard &board,int &trial,const int &boardSize);
 
 int main()
 {
@@ -34,7 +36,9 @@ int main()
 	char startFirst;
 	char playerSign;
 	char computerSign;
-	int boardSize=9;
+	int numOfRow=3;
+	int numOfCol=3;
+	int boardSize=numOfRow*numOfCol;
 
 
 	cout << "So this is the game of Tic Tac Toe, let see how it works" << "\n";
@@ -43,10 +47,10 @@ int main()
 	cout << "What kind of sign you would like ME to use?" << "\n";
 	cin >> computerSign;
 
-	//GameBoard(int nSize,char chPlayerSign,char chComputerSign);
-    GameBoard newGameBoard(boardSize+1,playerSign,computerSign);
+	//GameBoard(int nRow,int nCol,char chPlayerSign,char chComputerSign);
+    GameBoard gameBoard(numOfRow,numOfCol,playerSign,computerSign);
 
-	//let the player to choose if player go first or computer
+	//-----------------let the player to choose if player go first or computer-----------------
 	do {
 		cout << " Do you want to start first or not? y=yes and n=no \n";
 		cin >> startFirst;
@@ -56,65 +60,54 @@ int main()
 	int trial = 0;
 	if (startFirst == 'n')
 	{
-		computerPos = randomNum(1,boardSize);
-		newGameBoard.setComputerPos(computerPos);   //place the computer sign with the computer position
-        trial++;
-		cout <<"Trial is now"<< trial<<"\n";
+		computerMovement(gameBoard,trial,boardSize);
 	}
+	//-----------------------------------------------------------------------------------------
 
-	//while ((gameWin(playerSign,newGameBoard) == false) | (gameWin(computerSign,newGameBoard) == false) |(count<=9))
-
-	while (trial<boardSize)
+    Score gameScore;
+	while (gameScore.getGameState(gameBoard) == Score::PLAYING)
 	{
-		do{
-			cout << " Where do you want to place?" << "\n";
-			cin >> playerPos;
-		} while (newGameBoard.setPlayerPos(playerPos)==false);
+	    //----------------------player's movement-----------------------------
+        playerMovement(gameBoard,trial);
 
-		trial++;
-
-		cout <<"Trial is now"<< trial<<"\n";
-        cout <<"gameWin now is of PlayerSign"<< gameWin(playerSign,newGameBoard)<<"\n";
-        Score gameScore1;
-        //if (gameScore1.getGameState(newGameBoard)==2){
-                cout<<"the game state is now "<<gameScore1.getGameState(newGameBoard)<<"\n";
-        //}
-		if (gameWin(playerSign,newGameBoard) == true ||trial>=boardSize)
+		if (gameScore.getGameState(gameBoard) == Score::PLAYER_WIN ||trial>=boardSize)
         {
            break;
         }
 
-		cout << " It's my movement now " << "\n";
-		do{
-			computerPos = randomNum(1,boardSize); //to do random number from 1 to 9
-		} while (newGameBoard.setComputerPos(computerPos)==false);
-		trial++;
+        //----------------------computer's movement-----------------------------
+        computerMovement(gameBoard,trial,boardSize);
 
-		cout <<"Trial is now"<< trial<<"\n";
-        cout <<"gameWin now is of ComputerSign"<< gameWin(computerSign,newGameBoard)<<"\n";
-        cout<<"the game state is now "<<gameScore1.getGameState(newGameBoard)<<"\n";
-		if (gameWin(computerSign,newGameBoard) == true ||trial>=boardSize)
+		if (gameScore.getGameState(gameBoard) == Score::COMPUTER_WIN||trial>=boardSize)
         {
             break;
         }
 	}
 
-	if (gameWin(playerSign,newGameBoard) == true)
-		cout << " You Win!! :)" << "\n";
-	if (gameWin(computerSign,newGameBoard) == true)
-		cout << " I Win!! :)" << "\n";
-	if (trial>=9)
+	if (trial>=boardSize)
 		cout << " It is a DRAW :P" << "\n";
 
-	//screenStay();
 	return 0;
 }
 
-//game wining checking system
-bool gameWin(char sign,const GameBoard &board)
+void playerMovement(GameBoard &board,int &trial)
 {
-    Score   gameScore;
-    return gameScore.winChecking(sign,board);
+    int playerPos;
+    do{
+        cout << " Where do you want to place?" << "\n";
+        cin >> playerPos;
+    } while (board.setPlayerPos(playerPos)==false);     //while player's position is invalid
+    trial++;
+}
+
+void computerMovement(GameBoard &board,int &trial,const int &boardSize)
+{
+    int computerPos;
+    cout << " It's my movement now " << "\n";
+    do{
+        computerPos = randomNum(1,boardSize); //to do random number from 1 to 9
+    } while (board.setComputerPos(computerPos)==false);
+    trial++;
 }
 
 //generate random int number between max and min.
@@ -122,13 +115,4 @@ int randomNum(int min,int max)
 {
     return (rand() % (max-1)) + min;
 }
-
-/*
-void screenStay()
-{
-	using namespace std;
-	cin.clear();
-	cin.ignore(255, '\n');
-	cin.get();
-}*/
 

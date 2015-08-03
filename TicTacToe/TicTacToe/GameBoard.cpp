@@ -2,15 +2,18 @@
 #include "GameBoard.h"
 using namespace std;
 
-GameBoard::GameBoard(int nSize,char chPlayerSign='X',char chComputerSign='O')
+//constructor
+GameBoard::GameBoard(int nRow,int nCol,char chPlayerSign='X',char chComputerSign='O')
 {
-    m_nSize=nSize;
+    m_nRow=nRow;
+    m_nCol=nCol;
+    m_nSize=nRow*nCol;
     m_chPlayerSign=chPlayerSign;
     m_chComputerSign=chComputerSign;
-    pnArray= new char[m_nSize];
+    pnArray= new char[m_nSize+1];
 
     char count = 49; //ASCII number 1 start at char 49
-    for (int iii = 1; iii <10; iii++)
+    for (int iii = 1; iii <=m_nSize; iii++)
     {
         pnArray[iii] = count;
         count++;
@@ -30,9 +33,9 @@ GameBoard::~GameBoard()
 
 bool GameBoard::setPlayerPos(int playerPos)
 {
-    if (playerPos < 1 | playerPos > 9)
+    if (playerPos < 1 | playerPos > m_nSize)
     {
-        cout << "Your position should be within 1 and 9 \n";
+        cout << "Your position should be within 1 and "<<m_nSize<<" \n";
         return false;
     }
     if (pnArray[playerPos]== m_chPlayerSign)
@@ -82,6 +85,7 @@ char GameBoard::getComputerSign()
 void GameBoard::printBoard()
 {
     using namespace std;
+
     cout << " " << pnArray[1] <<" | "<<pnArray[2]<<" | "<<pnArray[3]<<" " << "\n";
 	cout << "---+---+---" << "\n";
 	cout << " " << pnArray[4] << " | " << pnArray[5] << " | " << pnArray[6] << " " << "\n";
