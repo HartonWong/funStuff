@@ -47,6 +47,9 @@ int main()
 	cout << "What kind of sign you would like ME to use?" << "\n";
 	cin >> computerSign;
 
+    cout<<"numOfRow and numOfCol? \n";
+    cin>>numOfCol;
+    numOfRow=numOfCol;
 	//GameBoard(int nRow,int nCol,char chPlayerSign,char chComputerSign);
     GameBoard gameBoard(numOfRow,numOfCol,playerSign,computerSign);
 

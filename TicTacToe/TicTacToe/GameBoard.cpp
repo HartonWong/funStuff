@@ -1,6 +1,6 @@
 #include <iostream>
 #include "GameBoard.h"
-using namespace std;
+
 
 //constructor
 GameBoard::GameBoard(int nRow,int nCol,char chPlayerSign='X',char chComputerSign='O')
@@ -17,6 +17,17 @@ GameBoard::GameBoard(int nRow,int nCol,char chPlayerSign='X',char chComputerSign
     {
         pnArray[iii] = count;
         count++;
+        /*
+        if(count<=57)
+        {
+            pnArray[iii] = count;
+            count++;
+        }
+        else
+        {
+
+        }
+        */
     }
     printBoard();
 }
@@ -33,6 +44,7 @@ GameBoard::~GameBoard()
 
 bool GameBoard::setPlayerPos(int playerPos)
 {
+    using namespace std;
     if (playerPos < 1 | playerPos > m_nSize)
     {
         cout << "Your position should be within 1 and "<<m_nSize<<" \n";
@@ -84,11 +96,39 @@ char GameBoard::getComputerSign()
 //print the game board based on the stored char in pnArray
 void GameBoard::printBoard()
 {
-    using namespace std;
+    int index=1;
+    printLine();
+    for(int row=1;row<=m_nRow;++row)
+    {
+        printNum(index);
+        printLine();
+    }
+}
 
-    cout << " " << pnArray[1] <<" | "<<pnArray[2]<<" | "<<pnArray[3]<<" " << "\n";
-	cout << "---+---+---" << "\n";
-	cout << " " << pnArray[4] << " | " << pnArray[5] << " | " << pnArray[6] << " " << "\n";
-	cout << "---+---+---" << "\n";
-	cout << " " << pnArray[7] << " | " << pnArray[8] << " | " << pnArray[9] << " " << "\n";;
+void GameBoard::printLine()
+{
+    using namespace std;
+    for(int col=1;col<m_nCol;++col)
+    {
+        cout<<"---+";
+    }
+    cout << "---\n";
+}
+void GameBoard::printNum(int &index)
+{
+    using namespace std;
+    cout<<" ";
+    for(int col=1;col<m_nCol;++col)
+    {
+        cout<< pnArray[index]<<" | ";
+        ++index;
+    }
+    cout<< pnArray[index]<<"\n";
+    ++index;
+}
+std::string GameBoard::intToString(int integer)
+{
+    using namespace std;
+    string name("John");
+    return name;
 }

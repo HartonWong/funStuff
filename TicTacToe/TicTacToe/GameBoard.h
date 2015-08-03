@@ -1,6 +1,6 @@
 #ifndef GAMEBOARD_H_INCLUDED
 #define GAMEBOARD_H_INCLUDED
-
+#include <string>
 class GameBoard
 {
     private:
@@ -13,6 +13,10 @@ class GameBoard
 
     // default constructor is not allowed;
     GameBoard();
+    void printLine();
+    void printNum(int &index);
+    std::string intToString(int integer);
+
 
     public:
     GameBoard(int nRow,int nCol,char chPlayerSign,char chComputerSign);
