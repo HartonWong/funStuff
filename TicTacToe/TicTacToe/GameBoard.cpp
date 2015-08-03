@@ -4,7 +4,7 @@ using namespace std;
 
 GameBoard::GameBoard(int nSize,char chPlayerSign='X',char chComputerSign='O')
 {
-    m_nSize=nSize+1;
+    m_nSize=nSize;
     m_chPlayerSign=chPlayerSign;
     m_chComputerSign=chComputerSign;
     pnArray= new char[m_nSize];
@@ -15,6 +15,7 @@ GameBoard::GameBoard(int nSize,char chPlayerSign='X',char chComputerSign='O')
         pnArray[iii] = count;
         count++;
     }
+    printBoard();
 }
 
 //destory the dynamic array to avoid memory leak
@@ -48,6 +49,8 @@ bool GameBoard::setPlayerPos(int playerPos)
     printBoard();
     return true;
 }
+
+//return false if computer position collide with occupied position
 bool GameBoard::setComputerPos(int computerPos)
 {
     if (pnArray[computerPos] == m_chPlayerSign | pnArray[computerPos] == m_chComputerSign)

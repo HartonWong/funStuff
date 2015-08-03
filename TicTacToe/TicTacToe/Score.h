@@ -3,10 +3,6 @@
 class Score
 {
     private:
-    //internal checking function for each sign.
-    bool winChecking(char sign,const GameBoard &cGameBoard);
-
-    public:
     enum GameState
     {
         PLAYER_WIN,
@@ -14,9 +10,11 @@ class Score
         PLAYING
     };
 
+
+    public:
     //return the state of the game once the caller passed the gameBoard to score
     GameState getGameState(const GameBoard &cGameBoard);
-
+    bool winChecking(char sign,const GameBoard &cGameBoard);
 
 };
 
