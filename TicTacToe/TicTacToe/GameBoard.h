@@ -1,32 +1,42 @@
 #ifndef GAMEBOARD_H_INCLUDED
 #define GAMEBOARD_H_INCLUDED
-
+#include <string>
 class GameBoard
 {
     private:
-    char m_chPlayerSign;
-    char m_chComputerSign;
+    std::string m_chPlayerSign;
+    std::string m_chComputerSign;
+    int m_nRow;
+    int m_nCol;
     int m_nSize;
-    char *pnArray;
+    std::string **pnArray;
+    int m_nLinks;
 
     // default constructor is not allowed;
     GameBoard();
+    void printLine();
+    void printNum(int &index,int row);
+    std::string intToString(int integer);
+    int positionToRow(int position);
+    int positionToCol(int position);
+    std::string& setBoardValue(int position);
+
 
     public:
-    GameBoard(int nSize,char chPlayerSign,char chComputerSign);
+    GameBoard(int nRow,int nCol,std::string chPlayerSign,std::string chComputerSign,int chLinks);
     ~GameBoard();
 
     //return true if player position is set correctly, and false if something went wrong
     bool setPlayerPos(int playerPos);
-    //return true if player position is set correctly, and false if something went wrong
+    //return true if computer position is set correctly, and false if something went wrong
     bool setComputerPos(int computerPos);
-    char getGridChar(int pos);
-    char getPlayerSign();
-    char getComputerSign();
+    //return the std::string in particular position
+    std::string getGridChar(int pos);
+    std::string getPlayerSign();
+    std::string getComputerSign();
     void printBoard();
 
     friend class Score;
-
 
 };
 

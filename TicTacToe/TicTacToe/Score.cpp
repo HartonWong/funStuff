@@ -1,28 +1,80 @@
+#include "GameBoard.h"
 #include "Score.h"
+#include <iostream>		/*cout,cin*/
 
-GameState Score::getGameState(GameBoard &cGameBoard)
+
+bool Score::winChecking(std::string sign,const GameBoard &cGameBoard)
 {
-
+    if(checkHorizontal(cGameBoard,sign))
+        return true;
+    else
+        return false;
+    /*
+	if ((cGameBoard.pnArray[1] == sign) & (cGameBoard.pnArray[2] == sign) & (cGameBoard.pnArray[3] == sign))
+		return true;
+	if ((cGameBoard.pnArray[1] == sign) &(cGameBoard.pnArray[4] == sign) &(cGameBoard.pnArray[7] == sign))
+		return true;
+	if ((cGameBoard.pnArray[4] == sign) &(cGameBoard.pnArray[5] == sign) &(cGameBoard.pnArray[6] == sign))
+		return true;
+	if ((cGameBoard.pnArray[1] == sign) &(cGameBoard.pnArray[5] == sign) &(cGameBoard.pnArray[9] == sign))
+		return true;
+	if ((cGameBoard.pnArray[2] == sign) &(cGameBoard.pnArray[5] == sign) &(cGameBoard.pnArray[8] == sign))
+		return true;
+	if ((cGameBoard.pnArray[3] == sign) &(cGameBoard.pnArray[5] == sign) &(cGameBoard.pnArray[7] == sign))
+		return true;
+	if ((cGameBoard.pnArray[7] == sign) &(cGameBoard.pnArray[8] == sign) &(cGameBoard.pnArray[9] == sign))
+		return true;
+	if ((cGameBoard.pnArray[3] == sign) &(cGameBoard.pnArray[6] == sign) &(cGameBoard.pnArray[9] == sign))
+		return true;
+    return false;
+    */
 }
-
-GameState Score::winChecking(char sign)
+Score::GameState Score::getGameState(const GameBoard &cGameBoard)
 {
-	bool playerWin = false;
-	if (gridPos[1] == playerSign & gridPos[2] == playerSign & gridPos[3] == playerSign)
-		return playerWin = true;
-	if (gridPos[1] == playerSign &gridPos[4] == playerSign &gridPos[7] == playerSign)
-		return playerWin = true;
-	if (gridPos[4] == playerSign &gridPos[5] == playerSign &gridPos[6] == playerSign)
-		return playerWin = true;
-	if (gridPos[1] == playerSign &gridPos[5] == playerSign &gridPos[9] == playerSign)
-		return playerWin = true;
-	if (gridPos[2] == playerSign &gridPos[5] == playerSign &gridPos[8] == playerSign)
-		return playerWin = true;
-	if (gridPos[3] == playerSign &gridPos[5] == playerSign &gridPos[7] == playerSign)
-		return playerWin = true;
-	if (gridPos[7] == playerSign &gridPos[8] == playerSign &gridPos[9] == playerSign)
-		return playerWin = true;
-	if (gridPos[3] == playerSign &gridPos[6] == playerSign &gridPos[9] == playerSign)
-		return playerWin = true;
+    if  (winChecking(cGameBoard.m_chPlayerSign,cGameBoard)==true)
+    {
+        std::cout << " You Win!! :)" << "\n";
+        return PLAYER_WIN;
+    }
+    if  (winChecking(cGameBoard.m_chComputerSign,cGameBoard)==true)
+    {
+        std::cout << " I Win!! :)" << "\n";
+        return COMPUTER_WIN;
+    }
+    return PLAYING;
 }
-Player_WIN;
+bool Score::checkHorizontal(const GameBoard &cGameBoard,std::string sign)
+{
+    int count=0;
+    bool flagConsecutive=false;
+    /*
+    for(int row=1;row<cGameBoard.m_nRow;row++)
+    {
+        for(int col=1;col<cGameBoard.m_nCol;col++)      //for every row
+        {
+          if(cGameBoard.pnArray[row][col]==sign)
+          {
+              if(flagConsecutive)
+                count++;
+              else
+                count=0;
+
+              flagConsecutive=true;
+          }
+          else
+          {
+              flagConsecutive=false;
+          }
+          if(count>=cGameBoard.m_nLinks)         //number of consecutive sign is greater than the required number of links
+          {
+              return true;
+              break;
+          }
+        }
+    }
+    */
+    if(count<cGameBoard.m_nLinks)         //number of consecutive sign is greater than the required number of links
+   {
+      return false;
+   }
+}

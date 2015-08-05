@@ -6,104 +6,126 @@
 #include "GameBoard.h"
 #include "Score.h"
 
+/*
+THINGS TO WORK ON:
+1) player can choose start first or not, choose using X or O	DONE
+2) resizable board, can choose 3x3, 4x4, 5x5...etc
+3) AI, stupid computer now that won't block user's movement.
+4) Refactoring
+	a) Rename variables into more descriptive words
+	b) Put some of the functions into header file?
+	c) Put the forward function call into header file
+	d) find ways to reduce the size of code
+	e) reduce the use of global variables such as gameBoard.getGridChar and namespace
+5) check user input against integer and string
+*/
 
 using namespace std;
-void screenStay();
-bool gameWin(char playerSign);
 
+//forward function declaration
+int randomNum(int min,int max);
+void playerMovement(GameBoard &board,int &trial);
+void computerMovement(GameBoard &board,int &trial,const int &boardSize);
 
 int main()
 {
-	//variabel initization
+	//variable initialization
 	srand(time(0));
+    int numOfRow;
+	int numOfCol;
+	int links=3;
+
+    string playerSign;
+	string computerSign;
+
+	char startFirst;
+
 	int playerPos;
 	int computerPos;
-	char startFirst;
-	char playerSign;
-	char computerSign;
 
-
+    //---------------User interface-------------------
+    cout<<"How many ROWS you want the board to be ?\n";
+    cin>>numOfRow;
+    cout<<"How many COLOUMNS you want the board to be ?\n";
+    cin>>numOfCol;
+    int boardSize=numOfRow*numOfCol;
+    /*
+    cout<<"How many links to win? \n";
+    cin>>links;
+    */
 	cout << "So this is the game of Tic Tac Toe, let see how it works" << "\n";
 	cout << "What kind of sign you would like to use?" << "\n";
 	cin >> playerSign;
 	cout << "What kind of sign you would like ME to use?" << "\n";
 	cin >> computerSign;
-    GameBoard newGameBoard(10,playerSign,computerSign);
 
-	//let the player to choose if player go first or computer
+    GameBoard gameBoard(numOfRow,numOfCol,playerSign,computerSign,links);
+	//-----------------let the player to choose if player go first or computer-----------------
+
+
 	do {
 		cout << " Do you want to start first or not? y=yes and n=no \n";
 		cin >> startFirst;
-	} while (startFirst != 'n' & startFirst != 'y' );
+	} while ((startFirst != 'n') & (startFirst != 'y') );
 
 	//if computer go first, randomly set a pos for computer
+	int trial = 0;
 	if (startFirst == 'n')
 	{
-		computerPos = (rand() % 8) + 1;
-		newGameBoard.setComputerPos(computerPos);
+		computerMovement(gameBoard,trial,boardSize);
 	}
 
-	int count = 0;
-	while (gameWin(playerSign) == false | gameWin(computerSign) == false |count<=9)
+	//-----------------------------------------------------------------------------------------
+
+    Score gameScore;
+	while (gameScore.getGameState(gameBoard) == Score::PLAYING)
 	{
-		do{
-			cout << " Where do you want to place?" << "\n";
-			cin >> playerPos;
-		} while (newGameBoard.setPlayerPos(playerPos)==false);
+	    //----------------------player's movement-----------------------------
+        playerMovement(gameBoard,trial);
 
-		count++;
-		if (gameWin(playerSign) == true)
-			break;
+		if (gameScore.getGameState(gameBoard) == Score::PLAYER_WIN | trial>=boardSize)
+        {
+           break;
+        }
 
-		cout << " It's my movement now " << "\n";
-		int computerPos;
-		do{
-			computerPos = (rand() % 8) + 1; //to do random number from 1 to 9
-		} while (newGameBoard.setComputerPos(computerPos)==false);
-		count++;
-		if (gameWin(computerSign) == true)
-			break;
-		if (count > 9)
-			break;
+        //----------------------computer's movement-----------------------------
+        computerMovement(gameBoard,trial,boardSize);
+
+		if (gameScore.getGameState(gameBoard) == Score::COMPUTER_WIN | trial>=boardSize)
+        {
+            break;
+        }
 	}
-	if (gameWin(playerSign) == true)
-		cout << " You Win!! :)" << "\n";
-	if (gameWin(computerSign) == true)
-		cout << " I Win!! :)" << "\n";
-	if (count>9)
+
+	if (trial>=boardSize)
 		cout << " It is a DRAW :P" << "\n";
 
-	screenStay();
 	return 0;
 }
 
-//game wining checking system
-bool gameWin(char playerSign)
+void playerMovement(GameBoard &board,int &trial)
 {
-	bool playerWin = false;
-	if (gridPos[1] == playerSign & gridPos[2] == playerSign & gridPos[3] == playerSign)
-		return playerWin = true;
-	if (gridPos[1] == playerSign &gridPos[4] == playerSign &gridPos[7] == playerSign)
-		return playerWin = true;
-	if (gridPos[4] == playerSign &gridPos[5] == playerSign &gridPos[6] == playerSign)
-		return playerWin = true;
-	if (gridPos[1] == playerSign &gridPos[5] == playerSign &gridPos[9] == playerSign)
-		return playerWin = true;
-	if (gridPos[2] == playerSign &gridPos[5] == playerSign &gridPos[8] == playerSign)
-		return playerWin = true;
-	if (gridPos[3] == playerSign &gridPos[5] == playerSign &gridPos[7] == playerSign)
-		return playerWin = true;
-	if (gridPos[7] == playerSign &gridPos[8] == playerSign &gridPos[9] == playerSign)
-		return playerWin = true;
-	if (gridPos[3] == playerSign &gridPos[6] == playerSign &gridPos[9] == playerSign)
-		return playerWin = true;
+    int playerPos;
+    do{
+        cout << " Where do you want to place?" << "\n";
+        cin >> playerPos;
+    } while (board.setPlayerPos(playerPos)==false);     //while player's position is invalid
+    trial++;
 }
 
-void screenStay()
+void computerMovement(GameBoard &board,int &trial,const int &boardSize)
 {
-	using namespace std;
-	cin.clear();
-	cin.ignore(255, '\n');
-	cin.get();
+    int computerPos;
+    cout << " It's my movement now " << "\n";
+    do{
+        computerPos = randomNum(1,boardSize); //to do random number from 1 to boardsize
+    } while (board.setComputerPos(computerPos)==false);
+    trial++;
+}
+
+//generate random int number between max and min.
+int randomNum(int min,int max)
+{
+    return (rand() % (max-1)) + min;
 }
 

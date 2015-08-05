@@ -1,21 +1,21 @@
 #ifndef SCORE_H_INCLUDED
 #define SCORE_H_INCLUDED
-class GameBoard
+#include <string>
+class Score
 {
     private:
+    bool winChecking(std::string sign,const GameBoard &cGameBoard);
+    bool checkHorizontal(const GameBoard &cGameBoard,std::string sign);
+    public:
     enum GameState
     {
-        PLAYER_WIN;
-        COMPUTER_WIN;
-        WIN;
-        TIE;
-        PLAYING;
-    }
-    GameState winChecking(char sign);
+        PLAYER_WIN,
+        COMPUTER_WIN,
+        PLAYING
+    };
+    //return the state of the game once the caller passed the gameBoard to score
+    GameState getGameState(const GameBoard &cGameBoard);
 
-    public:
-
-    GameState getGameState(GameBoard &cGameBoard);
 
 };
 

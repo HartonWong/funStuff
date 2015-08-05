@@ -1,22 +1,41 @@
 #include <iostream>
 #include "GameBoard.h"
-using namespace std;
+#include <sstream>      //for ostringstream used in int conversion
 
-GameBoard::GameBoard(int nSize,char chPlayerSign='X',char chComputerSign='O')
+
+//constructor
+GameBoard::GameBoard(int nRow,int nCol,std::string chPlayerSign,std::string chComputerSign,int chLinks)
 {
-    m_nSize=nSize;
+    m_nRow=nRow;
+    m_nCol=nCol;
+    m_nSize=nRow*nCol;
     m_chPlayerSign=chPlayerSign;
     m_chComputerSign=chComputerSign;
-    pnArray= new char[m_nSize];
-
-    char count = 49; //ASCII number 1 start at char 49
-    for (int iii = 1; iii <10; iii++)
+    m_nLinks=chLinks;
+    //initialize 2D dynamic array
+    pnArray= new std::string*[m_nRow+1];
+    for(int row=1;row<=m_nRow;row++)
     {
-        pnArray[iii] = count;
-        count++;
+        pnArray[row]=new std::string[m_nCol+1];
     }
+
+    //pnArray= new std::string[m_nSize+1];
+    //allocate 2D array with number from 1 to boardsize
+    int index=1;
+    for (int iii = 1; iii <=m_nRow; iii++)
+    {
+        for(int jjj=1;jjj<=m_nCol;jjj++)
+        {
+            pnArray[iii][jjj]=intToString(index);
+            index++;
+        }
+    }
+
+    printBoard();
+
 }
 
+//destory the dynamic array to avoid memory leak
 GameBoard::~GameBoard()
 {
     if(pnArray)
@@ -28,56 +47,131 @@ GameBoard::~GameBoard()
 
 bool GameBoard::setPlayerPos(int playerPos)
 {
-    if (playerPos < 1 | playerPos > 9)
+    using namespace std;
+    int row=positionToRow(playerPos);
+    int col=positionToCol(playerPos);
+    cout<<row<<"row \n";
+    cout<<col<<"col \n";
+    if (playerPos < 1 | playerPos > m_nSize)
     {
-        cout << "Your position should be within 1 and 9 \n";
+        cout << "Your position should be within 1 and "<<m_nSize<<" \n";
         return false;
     }
-    if (pnArray[playerPos]==m_chPlayerSign)
+
+    if (pnArray[row][col]==m_chPlayerSign)
     {
         cout << "You cannot replace where you have placed \n";
         return false;
     }
-    if (pnArray[playerPos] == m_chComputerSign)
+    if (pnArray[row][col]==m_chComputerSign)
     {
         cout << "You cannot replace where I have placed \n";
         return false;
     }
-    pnArray[playerPos]=m_chPlayerSign;
+
+    pnArray[row][col]=m_chPlayerSign;
+    printBoard();
     return true;
 }
+
+//return false if computer position collide with occupied position
 bool GameBoard::setComputerPos(int computerPos)
 {
-    if (pnArray[computerPos] == m_chPlayerSign | pnArray[computerPos] == m_chComputerSign)
+    int row=positionToRow(computerPos);
+    int col=positionToCol(computerPos);
+
+    if ((pnArray[row][col]==m_chPlayerSign) | (pnArray[row][col]==m_chComputerSign))
         return false;
     else
     {
-        pnArray[computerPos]=m_chComputerSign;
+        pnArray[row][col]=m_chComputerSign;
+        printBoard();
         return true;
     }
 }
 
-char GameBoard::getGridChar(int pos)
+/*
+std::string GameBoard::getGridChar(int pos)
 {
     return pnArray[pos];
 }
-char GameBoard::getPlayerSign()
+
+std::string GameBoard::getPlayerSign()
 {
     return m_chPlayerSign;
 }
-char GameBoard::getComputerSign()
+std::string GameBoard::getComputerSign()
 {
     return m_chComputerSign;
 }
-
+*/
 
 //print the game board based on the stored char in pnArray
 void GameBoard::printBoard()
 {
-    using namespace std;
-    cout << " " << pnArray[1] <<" | "<<pnArray[2]<<" | "<<pnArray[3]<<" " << "\n";
-	cout << "---+---+---" << "\n";
-	cout << " " << pnArray[4] << " | " << pnArray[5] << " | " << pnArray[6] << " " << "\n";
-	cout << "---+---+---" << "\n";
-	cout << " " << pnArray[7] << " | " << pnArray[8] << " | " << pnArray[9] << " " << "\n";;
+    int index=1;
+    printLine();
+    for(int row=1;row<=m_nRow;++row)
+    {
+        printNum(index,row);
+        printLine();
+    }
 }
+
+void GameBoard::printLine()
+{
+    using namespace std;
+    for(int col=1;col<m_nCol;++col)
+    {
+        cout<<"---+";
+    }
+    cout << "---\n";
+}
+void GameBoard::printNum(int &index,int row)
+{
+    using namespace std;
+    cout<<" ";
+    for(int col=1;col<m_nCol;++col)
+    {
+        if((index<=9)|(pnArray[row][col]==m_chPlayerSign) | (pnArray[row][col]==m_chComputerSign))  //1 digit number or is a sign
+        cout<< pnArray[row][col]<<" | ";
+        else                    //2 digit number, delete one space
+        cout<< pnArray[row][col]<<"| ";
+        ++index;
+    }
+    cout<< pnArray[row][m_nCol]<<"\n";
+    ++index;
+}
+std::string GameBoard::intToString(int integer)
+{
+    using namespace std;
+    ostringstream convert;  // stream used for the conversion
+    convert<<integer;
+    return  convert.str();  //return the contents of the stream
+}
+
+int GameBoard::positionToRow(int position)
+{
+    if(position%m_nCol==0)
+        return position/m_nCol;
+    return (position/m_nCol)+1;
+}
+int GameBoard::positionToCol(int position)
+{
+    if(position%m_nCol==0)
+        return m_nCol;
+    return position%m_nCol;
+}
+std::string& GameBoard::setBoardValue(int position)
+{
+    std::string value=intToString(position);
+    for (int iii = 1; iii <=m_nRow; iii++)
+    {
+        for(int jjj=1;jjj<=m_nCol;jjj++)
+        {
+            if(pnArray[iii][jjj]==intToString(position))
+                return pnArray[iii][jjj];
+        }
+    }
+}
+
