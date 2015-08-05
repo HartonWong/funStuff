@@ -1,3 +1,4 @@
+#include "stdafx.h"	
 #include "GameBoard.h"
 #include "Score.h"
 #include <iostream>		/*cout,cin*/

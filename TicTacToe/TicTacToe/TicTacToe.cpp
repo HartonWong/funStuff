@@ -1,4 +1,4 @@
-//#include "stdafx.h"		/*precompiled header*/
+#include "stdafx.h"		/*precompiled header*/
 #include <iostream>		/*cout,cin*/
 #include <stdio.h>      /* printf, scanf, puts, NULL */
 #include <stdlib.h>		/* srand, rand */
@@ -9,7 +9,7 @@
 /*
 THINGS TO WORK ON:
 1) player can choose start first or not, choose using X or O	DONE
-2) resizable board, can choose 3x3, 4x4, 5x5...etc
+2) resizable board, can choose 3x3, 4x4, 5x5...etc				DONE
 3) AI, stupid computer now that won't block user's movement.
 4) Refactoring
 	a) Rename variables into more descriptive words
@@ -26,6 +26,7 @@ using namespace std;
 int randomNum(int min,int max);
 void playerMovement(GameBoard &board,int &trial);
 void computerMovement(GameBoard &board,int &trial,const int &boardSize);
+void screenStay();
 
 int main()
 {
@@ -99,6 +100,7 @@ int main()
 
 	if (trial>=boardSize)
 		cout << " It is a DRAW :P" << "\n";
+	screenStay();
 
 	return 0;
 }
@@ -126,6 +128,14 @@ void computerMovement(GameBoard &board,int &trial,const int &boardSize)
 //generate random int number between max and min.
 int randomNum(int min,int max)
 {
-    return (rand() % (max-1)) + min;
+	return (rand() % (max-min+1) + min);
 }
 
+
+void screenStay()
+{
+using namespace std;
+cin.clear();
+cin.ignore(255, '\n');
+cin.get();
+}

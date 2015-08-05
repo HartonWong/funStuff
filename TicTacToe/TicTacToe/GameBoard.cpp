@@ -1,6 +1,8 @@
+#include "stdafx.h"	
 #include <iostream>
 #include "GameBoard.h"
 #include <sstream>      //for ostringstream used in int conversion
+
 
 
 //constructor
@@ -50,8 +52,6 @@ bool GameBoard::setPlayerPos(int playerPos)
     using namespace std;
     int row=positionToRow(playerPos);
     int col=positionToCol(playerPos);
-    cout<<row<<"row \n";
-    cout<<col<<"col \n";
     if (playerPos < 1 | playerPos > m_nSize)
     {
         cout << "Your position should be within 1 and "<<m_nSize<<" \n";
