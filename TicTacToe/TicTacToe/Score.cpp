@@ -44,11 +44,11 @@ Score::GameState Score::getGameState(const GameBoard &cGameBoard)
     }
     return PLAYING;
 }
-bool Score::checkHorizontal(const GameBoard &cGameBoard,std::string sign)
+bool Score::checkHorizontal(const GameBoard &cGameBoard)
 {
-    int count=0;
+    int count=1;
     bool flagConsecutive=false;
-    /*
+    
     for(int row=1;row<cGameBoard.m_nRow;row++)
     {
         for(int col=1;col<cGameBoard.m_nCol;col++)      //for every row
@@ -58,7 +58,7 @@ bool Score::checkHorizontal(const GameBoard &cGameBoard,std::string sign)
               if(flagConsecutive)
                 count++;
               else
-                count=0;
+                count=1;
 
               flagConsecutive=true;
           }
@@ -73,7 +73,7 @@ bool Score::checkHorizontal(const GameBoard &cGameBoard,std::string sign)
           }
         }
     }
-    */
+    
     if(count<cGameBoard.m_nLinks)         //number of consecutive sign is greater than the required number of links
    {
       return false;
