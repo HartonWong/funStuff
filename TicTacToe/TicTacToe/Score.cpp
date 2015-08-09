@@ -44,7 +44,7 @@ Score::GameState Score::getGameState(const GameBoard &cGameBoard)
     }
     return PLAYING;
 }
-bool Score::checkHorizontal(const GameBoard &cGameBoard)
+bool Score::checkHorizontal(const GameBoard &cGameBoard,std::string sign)
 {
     int count=1;
     bool flagConsecutive=false;
