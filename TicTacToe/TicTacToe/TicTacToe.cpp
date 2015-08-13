@@ -18,6 +18,7 @@ THINGS TO WORK ON:
 	d) find ways to reduce the size of code
 	e) reduce the use of global variables such as gameBoard.getGridChar and namespace
 5) check user input against integer and string
+6) Score checking function is not working with number 6
 */
 
 using namespace std;
@@ -49,6 +50,9 @@ int main()
     cin>>numOfRow;
     cout<<"How many COLOUMNS you want the board to be ?\n";
     cin>>numOfCol;
+	cout << "How many hit in order to call it a win, traditionally TicTacToe takes 3 hit? \n";
+	cin >> links;
+
     int boardSize=numOfRow*numOfCol;
     /*
     cout<<"How many links to win? \n";
@@ -77,14 +81,13 @@ int main()
 	}
 
 	//-----------------------------------------------------------------------------------------
-
     Score gameScore;
-	while (gameScore.getGameState(gameBoard) == Score::PLAYING)
+	while (1)
 	{
 	    //----------------------player's movement-----------------------------
         playerMovement(gameBoard,trial);
 
-		if (gameScore.getGameState(gameBoard) == Score::PLAYER_WIN | trial>=boardSize)
+		if (gameScore.getGameState(gameBoard, playerSign) == Score::PLAYER_WIN | trial >= boardSize)
         {
            break;
         }
@@ -92,7 +95,7 @@ int main()
         //----------------------computer's movement-----------------------------
         computerMovement(gameBoard,trial,boardSize);
 
-		if (gameScore.getGameState(gameBoard) == Score::COMPUTER_WIN | trial>=boardSize)
+		if (gameScore.getGameState(gameBoard,computerSign) == Score::COMPUTER_WIN | trial>=boardSize)
         {
             break;
         }
