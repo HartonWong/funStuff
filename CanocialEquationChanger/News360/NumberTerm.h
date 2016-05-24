@@ -3,6 +3,18 @@
 #include <list>		//	To use list
 #include <map>		//  Using map to save variables
 
+//------------------------------------------------- NumberTerm
+//	Description:
+//		Split up the string object into corresponding coefficient
+//		part and variable part. 
+//		Provide basic opertaion of the number term, such as 
+//		comparing like term and adding up like terms
+//	
+//	Note: 
+//		Terminology, the word "extract" used in function
+//		name implies the string will also be removed from the 
+//		passed in string
+//-------------------------------------------------------------
 class NumberTerm
 {
 	typedef std::string string;

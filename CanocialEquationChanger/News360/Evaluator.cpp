@@ -56,9 +56,23 @@ NumberTerm::List Evaluator::splitEquationIntoNumberTerms(
 		{
 			if (temporartyStringHolder.empty())
 			{
-				// Do nothing as this implies the sign is 
+				// This implies the sign is 
 				// used to denote positive or negative
 				// for the first term
+
+				// Just reset the temporary string holder to 
+				// current char
+				temporartyStringHolder = currentChar;
+			}
+			else if (temporartyStringHolder.back() == '^')
+			{
+				// If the previous character is a exponent sign
+				// the negative or positive is for the exponent,
+				// not to plus/minus a term
+
+				// Just append the character to the string
+				// holder
+				temporartyStringHolder += currentChar;
 			}
 			else
 			{
@@ -69,11 +83,11 @@ NumberTerm::List Evaluator::splitEquationIntoNumberTerms(
 					numberTermList,
 					temporartyStringHolder,
 					isRhsOfEquation);
-			}
 
-			// Reset the temporary string holder to 
-			// current char
-			temporartyStringHolder = currentChar;
+				// Just reset the temporary string holder to 
+				// current char
+				temporartyStringHolder = currentChar;
+			}
 			break;
 		}
 

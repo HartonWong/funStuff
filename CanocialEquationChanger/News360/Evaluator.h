@@ -2,6 +2,14 @@
 #include <string>
 #include "NumberTerm.h"	// Number Term utility class
 
+//------------------------------------------------- Evaluator
+//	Description:
+//		1)Split up the whole equation string into individual
+//		number term
+//		2)Combine like term
+//		3)Convert individual NumberTerm class into whole equation
+//		  string for UI representation
+//-------------------------------------------------------------
 class Evaluator
 {
 	typedef std::string string;

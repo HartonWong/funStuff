@@ -11,7 +11,7 @@
 
 //---------------------------------------------------------CTOR
 // Implementation Note:
-//	extract data to individual member variables
+//		Extract data to individual member variables
 //-------------------------------------------------------------
 NumberTerm::NumberTerm(
 	const string numberTerm,
@@ -25,7 +25,7 @@ NumberTerm::NumberTerm(
 
 //---------------------------------------------------------DTOR
 // Implementation Note:
-//	Clear member variables
+//		Clear member variables
 //-------------------------------------------------------------
 NumberTerm::~NumberTerm()
 {
@@ -43,7 +43,7 @@ const bool NumberTerm::isLikeTerm(const NumberTerm & rhs) const
 
 //----------------------------------------------viewCoefficient
 // Implementation Note:
-//		Return the const reference of coefficient to caller
+//		Provide read-only access of coefficient to caller
 //-------------------------------------------------------------
 const float NumberTerm::viewCoefficient(void) const
 {
@@ -74,6 +74,7 @@ NumberTerm operator+(const NumberTerm &lhs, const NumberTerm &rhs)
 		// Cannot add two number terms if they are not like terms.
 		abort();
 	}
+
 	NumberTerm sumNumberTerm;
 
 	// Add the coefficient only
@@ -165,8 +166,16 @@ void NumberTerm::extractVariables(string& numberTerm)
 					// Only 2 character to be removed, variable + ^
 					numberTerm.erase(firstIndex, 2);
 
-					// If non digit number followed after ^
-					if (!isdigit(numberTerm[firstIndex]))
+					const bool isPlusMinusSign =
+						numberTerm[firstIndex] == '+' ||
+						numberTerm[firstIndex] == '-';
+
+					// If non digit number followed after ^ other than
+					// +/- sign, because +/- sign can imply positive
+					// or negative interger exponent, which is acceptable
+					// in this case
+					if (!isdigit(numberTerm[firstIndex]) &&
+						!isPlusMinusSign)
 					{
 						// Throw exception if exponent is not interger
 						throw std::invalid_argument(

@@ -4,7 +4,6 @@
 // standard library class
 #include "stdafx.h"		// precompiled header
 #include <iostream>		// For cout,cin
-#include <stdio.h>      // For printf, scanf, puts, NULL
 #include <string>		// String class
 #include <sstream>		// String stream to convert float to string
 #include <fstream>		// For file parsing
@@ -13,11 +12,10 @@
 // Custom class 
 #include "Evaluator.h"	// Number Term utility class
 
-//--------------------forward function declaration
-void screenStay(void);
-//-------------------------------------------------
-
-
+//--------------------------------------------------------main
+// Implementation Note:
+//		
+//-------------------------------------------------------------
 int main()
 {
 	// Repeat process until user press Ctrl+C to terminate
@@ -46,7 +44,8 @@ int main()
 
 			if (!infile)
 			{
-				std::cout << "ERROR: File does not exist" << std::endl;
+				std::cout << "ERROR: File does not exist." << std::endl;
+				std::cout << "Did you forget to type in the whole directory path?" << std::endl;
 				isFileOperationSuccessful = false;
 			}
 
@@ -60,7 +59,7 @@ int main()
 
 			if (isFileOperationSuccessful)
 			{
-				outputFile.open("outputFile.txt");
+				outputFile.open("outputFile.out");
 
 				while (std::getline(infile, equation))
 				{
@@ -131,17 +130,4 @@ int main()
 	}
 
 	return 0;
-}
-
-//---------------------------------------------------screenStay
-// Implementation Note:
-//	 To ensure the console application won't 
-//   close itself after displaying the answer
-//-------------------------------------------------------------
-void screenStay(void)
-{
-	using namespace std;
-	cin.clear();
-	cin.ignore(255, '\n');
-	cin.get();
 }
