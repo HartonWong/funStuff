@@ -5,10 +5,12 @@ class Score
 {
     private:
     bool winChecking(std::string sign,const GameBoard &cGameBoard);
-	bool check(const GameBoard &cGameBoard, std::string sign, std::string mode, bool& flagConsective);
-	bool arrayCheck(const GameBoard &cGameBoard, const std::string mode, const int iii, const int jjj, const std::string sign);
-	//bool secondCheck(const GameBoard &cGameBoard, std::string mode, int &count);
 
+	bool checkHori(const GameBoard &cGameBoard, std::string sign);
+	bool checkVert(const GameBoard &cGameBoard, std::string sign);
+	bool checkBackSlash(const GameBoard &cGameBoard, std::string sign);
+	bool checkForwardSlash(const GameBoard &cGameBoard, std::string sign);
+	bool isConsecutive(const bool &conditionMet, bool &flagConsecutive, int &hitCount, const int &links, const int &defaultHitCount);
 
     public:
     enum GameState

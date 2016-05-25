@@ -33,74 +33,80 @@ Score::GameState Score::getGameState(const GameBoard &cGameBoard,const std::stri
 
 bool Score::winChecking(std::string sign,const GameBoard &cGameBoard)
 {
-	bool flagConsecutiveHorz = false;
-	bool flagConsecutiveVert = false;
-	if (check(cGameBoard, sign, "Horizontal", flagConsecutiveHorz) | check(cGameBoard, sign, "Vertical", flagConsecutiveVert))
+	if (checkHori(cGameBoard, sign) | checkVert(cGameBoard, sign))
         return true;
     else
         return false;
 }
 
-bool Score::check(const GameBoard &cGameBoard, std::string sign, std::string mode, bool& flagConsecutive)
+bool Score::checkHori(const GameBoard &cGameBoard, std::string sign)
 {
-	int defaultHitCount = 1;
-	int hitCount = defaultHitCount;
-	int firstBoundary=0;
-	int secondBoundary=0;
+	int hitCount, defaultHitCount = 1;
+	bool flagConsecutive = false;
 
-	if (mode == "Horizontal")
-	{
-		firstBoundary = cGameBoard.m_nRow;
-		secondBoundary = cGameBoard.m_nCol;
-	}
-	else if (mode == "Vertical")
-	{
-		firstBoundary = cGameBoard.m_nCol;
-		secondBoundary = cGameBoard.m_nRow;
-	}
-
-	for (int iii = 1; iii<firstBoundary; iii++)
+	for (int iii = 1; iii<cGameBoard.m_nRow; iii++)
     {
-		for (int jjj = 1; jjj<secondBoundary; jjj++)      //for every row
+		for (int jjj = 1; jjj<cGameBoard.m_nCol; jjj++)      //for every row
         {
-
-			if (arrayCheck(cGameBoard,mode,iii,jjj,sign))
-			{
-				if (flagConsecutive)
-				hitCount++;
-				else
-					hitCount = defaultHitCount;
-
-				flagConsecutive=true;
-			}
-			else
-			{
-				flagConsecutive=false;
-			}
-			if(hitCount>=cGameBoard.m_nLinks)         //number of consecutive sign is greater than the required number of links
-			{
+			bool condition = cGameBoard.pnArray[iii][jjj] == sign;
+			if (isConsecutive(condition, flagConsecutive, hitCount, cGameBoard.m_nLinks, defaultHitCount))
 				return true;
-			}
         }
     }
-    
-    if(hitCount<cGameBoard.m_nLinks)         //number of consecutive sign is greater than the required number of links
-   {
-      return false;
-   }
+    return false;
 }
 
-
-bool Score::arrayCheck(const GameBoard &cGameBoard, const std::string mode, const int iii, const int jjj, const std::string sign)
+bool Score::checkHori(const GameBoard &cGameBoard, std::string sign)
 {
-	if (mode == "Horizontal")
+	int hitCount, defaultHitCount = 1;
+	bool flagConsecutive = false;
+
+	for (int iii = 1; iii<cGameBoard.m_nRow; iii++)
 	{
-		return cGameBoard.pnArray[iii][jjj] == sign;
+		for (int jjj = 1; jjj<cGameBoard.m_nCol; jjj++)      //for every row
+		{
+			bool condition = cGameBoard.pnArray[iii][jjj] == sign;
+			if (isConsecutive(condition, flagConsecutive, hitCount, cGameBoard.m_nLinks, defaultHitCount))
+				return true;
+		}
 	}
-	else if (mode == "Vertical")
-	{
-		return cGameBoard.pnArray[jjj][iii] == sign;
-	}
+	return false;
 }
+bool Score::checkVert(const GameBoard &cGameBoard, std::string sign)
+{
+	int hitCount, defaultHitCount = 1;
+	bool flagConsecutive = false;
 
+	for (int iii = 1; iii<cGameBoard.m_nCol; iii++)
+	{
+		for (int jjj = 1; jjj<cGameBoard.m_nRow; jjj++)      //for every row
+		{
+			bool condition = cGameBoard.pnArray[jjj][iii] == sign;
+			if (isConsecutive(condition, flagConsecutive, hitCount, cGameBoard.m_nLinks, defaultHitCount))
+				return true;
+		}
+	}
+	return false;
+}
+bool Score::isConsecutive(const bool &conditionMet, bool &flagConsecutive, int &hitCount, const int &links,const int &defaultHitCount)
+{
+	if (conditionMet)
+	{
+		if (flagConsecutive)
+			hitCount++;
+		else
+			hitCount = defaultHitCount;
 
+		flagConsecutive = true;
+	}
+	else
+	{
+		flagConsecutive = false;
+	}
+	if (hitCount >= links)         //number of consecutive sign is greater than the required number of links
+	{
+		return true;
+	}
+	else
+		return false;
+}
