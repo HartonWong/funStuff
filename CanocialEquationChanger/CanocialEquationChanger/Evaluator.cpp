@@ -23,6 +23,7 @@ Evaluator::Evaluator(const string equation)
 
 	m_nCanonicalEqString = this->convertListToString();
 }
+
 //--------------------------------------------------------DTOR
 // Implementation Note:
 //		Clear out private member variables, if required.
@@ -31,6 +32,16 @@ Evaluator::~Evaluator()
 {
 	m_nNumberTermList.clear();
 }
+
+//-------------------------------------------viewNumberTermList
+// Implementation Note:
+//		Return the number list term for testing purpose
+//-------------------------------------------------------------
+const NumberTerm::List Evaluator::viewNumberTermList(void) const
+{
+	return m_nNumberTermList;
+}
+
 //----------------------------------------viewCanonicalEquation
 // Implementation Note:
 //		Return the const reference of coefficient to caller

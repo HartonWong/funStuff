@@ -185,7 +185,17 @@ void NumberTerm::extractVariables(string& numberTerm)
 					// if exponent is a whole number
 					if (exponent == (int)exponent)
 					{
-						m_nVariables[individualVar] = (int)exponent;
+						if ((int)exponent == 0)
+						{
+							// If the exponent is 0, it basically
+							// implies the variable is just 1.
+							// Just do nothing
+							numberTerm.erase(firstIndex, 1);
+						}
+						else
+						{
+							m_nVariables[individualVar] = (int)exponent;
+						}
 					}
 					else
 					{

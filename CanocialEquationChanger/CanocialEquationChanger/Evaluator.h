@@ -24,6 +24,12 @@ public:
 	//--------------------------------------------------------------
 	virtual ~Evaluator();
 
+	//------------------------------------------ viewNumberTermList
+	//	Description:
+	//		Return the number list term for testing purpose
+	//-------------------------------------------------------------
+	const NumberTerm::List viewNumberTermList(void) const;
+
 	//--------------------------------------- viewCanonicalEquation
 	//	Description:
 	//		Return the Canonical Equation to caller
