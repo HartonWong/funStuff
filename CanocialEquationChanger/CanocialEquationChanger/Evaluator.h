@@ -13,7 +13,8 @@ public:
 
 	//------------------------------------------------- constructor
 	//	Description:
-	//		
+	//		Convert the whole string equation into canocial equation
+	//
 	//-------------------------------------------------------------
 	Evaluator(const string equation);
 
@@ -23,7 +24,7 @@ public:
 	//--------------------------------------------------------------
 	virtual ~Evaluator();
 
-	//--------------------------------------------- viewCanonicalEquation
+	//--------------------------------------- viewCanonicalEquation
 	//	Description:
 	//		Return the Canonical Equation to caller
 	//-------------------------------------------------------------
@@ -33,6 +34,7 @@ private:
 	//-----------------------------------------------------------//
 	//------------------Private Function ------------------------//
 	//-----------------------------------------------------------//
+
 	//-------------------------------------------default constructor
 	//	Description:
 	//		Abort when called
@@ -40,51 +42,55 @@ private:
 
 	Evaluator();
 
-	//------------------------------------------------- 
+	//-----------------------------------splitEquationIntoNumberTerms
 	//	Description:
-	//		
-	//      
+	//		Change the equation into canonical form
+	//		Check if same term exist, if so, add/minus the coefficient
 	//	Argument:
-	//		
+	//		equation	-	the whole equation string that includes
+	//						multiple number terms
 	//-------------------------------------------------------------
-	NumberTerm::List splitEquationIntoNumberTerms(
+	void splitEquationIntoNumberTerms(
 		const string equation);
 
-	//------------------------------------------------- 
+	//----------------------------------------------combineEquation 
 	//	Description:
-	//		
+	//		Combine every like term in NumberTerm::List
 	//      
 	//	Argument:
-	//		
+	//		None
 	//-------------------------------------------------------------
-	void combineEquation(
-		NumberTerm::List&	numberTermList);
+	void combineEquation();
 
-	//------------------------------------------------- 
+	//----------------------------------------- convertListToString
 	//	Description:
-	//		
+	//		Convert NumberTerm::List into 1 equation string
 	//      
 	//	Argument:
-	//		
+	//		None
 	//-------------------------------------------------------------
-	const string convertListToString(
-		const NumberTerm::List&	numberTermList);
+	const string convertListToString();
 
-	//------------------------------------------------- 
+	//----------------------------------------- addNumberTermToList
 	//	Description:
-	//		
-	//      
+	//		Add the number term string to the number term list
 	//	Argument:
-	//		
+	//		numberTermString-	The number term string to be converted
+	//								into NumberTerm object
+	//		isRhsOfEquation	-	Required by NumberTerm construction
 	//-------------------------------------------------------------
 	void addNumberTermToList(
-		NumberTerm::List&	numberTermList,
 		const string		numberTermString,
 		const bool			isRhsOfEquation);
 
 	//-----------------------------------------------------------//
 	//------------------Private Member Variables ----------------//
 	//-----------------------------------------------------------//
+	
+	// The Return equation string
 	string m_nCanonicalEqString;
+
+	// The list that hold individuals number terms
+	NumberTerm::List m_nNumberTermList;
 };
 

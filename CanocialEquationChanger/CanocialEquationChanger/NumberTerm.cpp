@@ -3,7 +3,6 @@
 #include <stdlib.h>     // For ABORT
 #include <stdio.h>		// For isalpha
 #include <ctype.h>		// For isalpha
-#include <sstream>		// String stream to convert string to float
 
 //-----------------------------------------------------------//
 //------------------Public Function -------------------------//
@@ -18,6 +17,13 @@ NumberTerm::NumberTerm(
 	const bool isRhsOfEquation)
 {
 	string updatedNumberTermString = numberTerm;
+	if (numberTerm.empty())
+	{
+		// Throw exception if string is empty
+		throw std::invalid_argument(
+			"Cannot have an empty term \n");
+	}
+
 	// set the member variable
 	extractCoefficient(updatedNumberTermString, isRhsOfEquation);
 	extractVariables(updatedNumberTermString);
@@ -170,7 +176,7 @@ void NumberTerm::extractVariables(string& numberTerm)
 					{
 						// Throw exception if exponent is not interger
 						throw std::invalid_argument(
-							"Exponent cannot be non-digit character \n");
+							"Exponent cannot be non-numerical character \n");
 					}
 
 					float exponent = 

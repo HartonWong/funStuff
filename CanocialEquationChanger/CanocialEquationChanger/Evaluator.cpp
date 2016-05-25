@@ -7,21 +7,29 @@
 //-----------------------------------------------------------//
 typedef std::string string;
 
+//---------------------------------------------------------CTOR
+// Implementation Note:
+//		Convert the whole string equation into canocial equation
+//-------------------------------------------------------------
 Evaluator::Evaluator(const string equation)
 {
-	NumberTerm::List numberTermList;
-	numberTermList =
-		this->splitEquationIntoNumberTerms(equation);
+	// Clear member variable before using it
+	m_nNumberTermList.clear();
+	
+	this->splitEquationIntoNumberTerms(equation);
 
 	// Modify the number term list to combine like terms
-	this->combineEquation(numberTermList);
+	this->combineEquation();
 
-	m_nCanonicalEqString =
-		this->convertListToString(numberTermList);
+	m_nCanonicalEqString = this->convertListToString();
 }
-
-Evaluator::Evaluator()
+//--------------------------------------------------------DTOR
+// Implementation Note:
+//		Clear out private member variables, if required.
+//-------------------------------------------------------------
+Evaluator::~Evaluator()
 {
+	m_nNumberTermList.clear();
 }
 //----------------------------------------viewCanonicalEquation
 // Implementation Note:
@@ -40,10 +48,9 @@ const string Evaluator::viewCanonicalEquation(void) const
 //	Change the equation into canonical form
 //	Check if same term exist, if so, add/minus the coefficient
 //-------------------------------------------------------------
-NumberTerm::List Evaluator::splitEquationIntoNumberTerms(
+void Evaluator::splitEquationIntoNumberTerms(
 	const string equation)
 {
-	NumberTerm::List numberTermList;
 	string temporartyStringHolder = "";
 	bool isRhsOfEquation = false;
 
@@ -66,7 +73,6 @@ NumberTerm::List Evaluator::splitEquationIntoNumberTerms(
 				// +/- sign, so add this number term
 				// to the list
 				addNumberTermToList(
-					numberTermList,
 					temporartyStringHolder,
 					isRhsOfEquation);
 			}
@@ -80,7 +86,6 @@ NumberTerm::List Evaluator::splitEquationIntoNumberTerms(
 		case '=':
 		{
 			addNumberTermToList(
-				numberTermList,
 				temporartyStringHolder,
 				isRhsOfEquation);
 
@@ -137,18 +142,15 @@ NumberTerm::List Evaluator::splitEquationIntoNumberTerms(
 	}
 
 	// This add the last term to the number term list
-	addNumberTermToList(numberTermList, temporartyStringHolder, isRhsOfEquation);
-
-	return numberTermList;
+	addNumberTermToList(temporartyStringHolder, isRhsOfEquation);
 }
 
 //-------------------------------------------addNumberTermToList
 // Implementation Note:
 //	Add the number term string to the number term list
 //-------------------------------------------------------------
-void Evaluator::addNumberTermToList(NumberTerm::List&	numberTermList,
-						 const string		numberTermString,
-						 const bool			isRhsOfEquation)
+void Evaluator::addNumberTermToList(const string	numberTermString,
+									const bool		isRhsOfEquation)
 {
 	try
 	{
@@ -157,7 +159,7 @@ void Evaluator::addNumberTermToList(NumberTerm::List&	numberTermList,
 
 		// Add this newly created number term object into the list
 		// such that we can combine terms later on
-		numberTermList.emplace_back(numberTerm);
+		m_nNumberTermList.emplace_back(numberTerm);
 	}
 	catch(const std::invalid_argument& e)
 	{
@@ -170,13 +172,13 @@ void Evaluator::addNumberTermToList(NumberTerm::List&	numberTermList,
 //	Change the equation into canonical form
 //	Check if same term exist, if so, add/minus the coefficient
 //-------------------------------------------------------------
-void Evaluator::combineEquation(NumberTerm::List&	numberTermList)
+void Evaluator::combineEquation()
 {
-	NumberTerm::List::iterator termIter = numberTermList.begin();
-	while (termIter != numberTermList.end())
+	NumberTerm::List::iterator termIter = m_nNumberTermList.begin();
+	while (termIter != m_nNumberTermList.end())
 	{
 		NumberTerm::List::const_iterator comparedTermIter = std::next(termIter, 1);
-		while (comparedTermIter != numberTermList.end())
+		while (comparedTermIter != m_nNumberTermList.end())
 		{
 			if (termIter->isLikeTerm(*comparedTermIter))
 			{
@@ -186,7 +188,7 @@ void Evaluator::combineEquation(NumberTerm::List&	numberTermList)
 
 				// Remove the compared term from the list since
 				// it is already combined to the first term
-				comparedTermIter = numberTermList.erase(comparedTermIter);
+				comparedTermIter = m_nNumberTermList.erase(comparedTermIter);
 
 				// Don't increment iterator here since removing an entry 
 				// automatically increment the iterator
@@ -205,11 +207,11 @@ void Evaluator::combineEquation(NumberTerm::List&	numberTermList)
 // Implementation Note:
 //	
 //-------------------------------------------------------------
-const string Evaluator::convertListToString(const NumberTerm::List& numberTermList)
+const string Evaluator::convertListToString()
 {
 	string wholeEquationString = "";
 
-	for (const NumberTerm& individualTerm : numberTermList)
+	for (const NumberTerm& individualTerm : m_nNumberTermList)
 	{
 		// Append +  if coefficient is positive
 		const float coefficient = individualTerm.viewCoefficient();
@@ -249,6 +251,10 @@ const string Evaluator::convertListToString(const NumberTerm::List& numberTermLi
 	return wholeEquationString;
 }
 
-Evaluator::~Evaluator()
+//----------------------------------------CTOR
+// Implementation Note:
+//		Return the const reference of coefficient to caller
+//-------------------------------------------------------------
+Evaluator::Evaluator()
 {
 }

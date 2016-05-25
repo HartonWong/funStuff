@@ -60,7 +60,7 @@ int main()
 
 			if (isFileOperationSuccessful)
 			{
-				outputFile.open("outputFile.txt");
+				outputFile.open("outputFile.out");
 
 				while (std::getline(infile, equation))
 				{
